@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ChatBot</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        .chat-box { border: 1px solid #ccc; padding: 10px; max-width: 600px; }
+        .message { margin-bottom: 10px; }
+        .user { font-weight: bold; color: blue; }
+        .bot { font-weight: bold; color: green; }
+    </style>
+</head>
+<body>
+    <h1>Chat with Bot</h1>
+    <div class="chat-box">
+        {% for m in messages %}
+            <div class="message">
+                <span class="{% if m.sender %}user{% else %}bot{% endif %}">
+                    {% if m.sender %}You{% else %}Bot{% endif %}
+                </span>
+                {{ m.message }}
+            </div>
+        {% empty %}
+            <p>No messages yet.</p>
+        {% endfor %}
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Type your message..." required minlength="1">
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>
